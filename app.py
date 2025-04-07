@@ -204,7 +204,7 @@ def apply_style(style_name, intensity, image_stream):
 # ========== RUN THE APP ==========
 if __name__ == "__main__":
     # Start Flask server on a different port if 5000 is in use
-    port = 5000
+    port = 8080
     print("running....")
     while True:
         try:
