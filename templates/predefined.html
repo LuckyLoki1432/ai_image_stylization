@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎨 AI Image Stylization Editor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <img src="{{ url_for('static', filename='rompit.png') }}" alt="ROMPIT Logo" class="logo">
+            <div class="company-name">ROMPIT TECHNOLOGIES</div>
+        </div>
+
+        <div class="header">
+            <h1>🎨 AI Style Transfer Editor</h1>
+            <p>Apply artistic styles to your photos</p>
+        </div>
+
+        <div class="image-container">
+            <div class="sidebar">
+                <h2>🎚️ Style Controls</h2>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="style">🎨 Select Art Style</label>
+                        <select id="style" name="style">
+                            {% for style in styles %}
+                            <option value="{{ style }}" {% if style == selected_style %}selected{% endif %}>{{ style_emojis[style] }} {{ style }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intensity">🎚️ Style Intensity ({{ intensity }})</label>
+                        <input type="range" id="intensity" name="intensity" min="0.1" max="1.0" step="0.1" value="{{ intensity }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>✨ Quick Presets</label>
+                        <div class="preset-buttons">
+                            <button type="submit" name="preset" value="vivid">Vivid</button>
+                            <button type="submit" name="preset" value="subtle">Subtle</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">📤 Upload Your Photo</label>
+                        <input type="file" id="file" name="file" accept="image/*" required>
+                    </div>
+
+                    <button type="submit" name="action" value="preview" id="apply-style">Apply Style</button>
+                </form>
+            </div>
+
+            <div id='loading'>
+                <p>Loading the Stylized Image <br/>Please Wait</p>
+            </div>
+
+            <div class="image-col">
+                {% if original_img %}
+                <div class="style-card">
+                    <h3 style="text-align:center; color:#333;">Original Photo</h3>
+                    <img src="data:image/jpeg;base64,{{ original_img }}" class="image-preview" id="original-img">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="image-col">
+                {% if edited_img %}
+                <div class="style-card">
+                    <h3 style="text-align:center; color:#333;">{{ style_emojis[selected_style] }} {{ selected_style }}</h3>
+                    <img src="data:image/jpeg;base64,{{ edited_img }}" class="image-preview" id="edited-img">
+
+                    <div class="form-group">
+                        <button type="button" id="download-btn">💾 Download Styled Image</button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎨 <strong>Style Transfer Photo Editor</strong> - Created with Flask</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='javascript.js') }}"></script>
+</body>
+</html>
