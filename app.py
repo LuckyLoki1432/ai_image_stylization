@@ -214,7 +214,7 @@ if __name__ == "__main__":
             port += 1
 
     # Set up ngrok tunnel
-    ngrok.set_auth_token("2v7LfZICv9D7Lfca21ptCR6Tyvv_6Xf7yXdvDkvkHr5XcFg5U")  # Free demo token
+    ngrok.set_auth_token("2vRKbQjotKr2ukLDUhApZJvxnC5_2fXqG2WJveACkMYzFjwot")  # Free demo token
     public_url = ngrok.connect(port, proto="http")
     print(f"\n✨ Your Style Transfer Editor is ready at: {public_url.public_url}\n")
 
